@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,7 +27,7 @@ FORMS    += \
 RESOURCES += \
     occqt.qrc
 
-CASROOT = D:/OpenCASCADE7.4.0/opencascade-7.4.0
+CASROOT = E:/OCCT/OpenCASCADE-7.6.0-vc14-64/opencascade-7.6.0
     
 win32 {
     DEFINES +=  \
@@ -50,7 +50,11 @@ win32 {
     win32-msvc2015 {
         compiler=vc14
     }
-
+    win32-msvc2019 {
+        compiler=vc14
+    }
+    # Because the local Occ7.6 is built by VS2019, the output directory is vc14, so it is fixed to vc14
+   compiler=vc14
     # Determine 32 / 64 bit and debug / release build
     !contains(QMAKE_TARGET.arch, x86_64) {
         CONFIG(debug, debug|release) {
@@ -65,7 +69,7 @@ win32 {
     else {
         CONFIG(debug, debug|release) {
             message("Debug 64 build")
-            LIBS += -L$$(CASROOT)/win64/$$compiler/libd
+            LIBS += -L$$(CASROOT)/win64/$$compiler/lib
         }
         else {
             message("Release 64 build")
